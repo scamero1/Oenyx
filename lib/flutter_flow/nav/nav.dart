@@ -38,7 +38,37 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => HomePageWidget(),
+          builder: (context, _) => const AuthGateWidget(),
+        ),
+        FFRoute(
+          name: LoginPageWidget.routeName,
+          path: LoginPageWidget.routePath,
+          builder: (context, params) => const LoginPageWidget(),
+        ),
+        FFRoute(
+          name: OtpPageWidget.routeName,
+          path: OtpPageWidget.routePath,
+          builder: (context, params) {
+            final extra = params.state.extra is Map ? params.state.extra as Map : {};
+            return OtpPageWidget(
+              sessionId: '${extra['sessionId'] ?? ''}',
+              destination: '${extra['destination'] ?? ''}',
+            );
+          },
+        ),
+        FFRoute(
+          name: TicketsPageWidget.routeName,
+          path: TicketsPageWidget.routePath,
+          builder: (context, params) => const TicketsPageWidget(),
+        ),
+        FFRoute(
+          name: TicketDetailPageWidget.routeName,
+          path: '/tickets/:ticketId',
+          builder: (context, params) {
+            final tid = int.tryParse(params.getParam('ticketId', ParamType.String) ?? '') ?? 0;
+            final extra = params.state.extra is Map ? params.state.extra as Map : null;
+            return TicketDetailPageWidget(ticketId: tid, ticket: extra);
+          },
         ),
         FFRoute(
           name: HomePageWidget.routeName,

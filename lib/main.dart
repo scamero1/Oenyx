@@ -4,6 +4,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
+import 'flutter_flow/nav/nav.dart';
+import 'index.dart';
+import 'services/session_store.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,6 +14,8 @@ void main() async {
   usePathUrlStrategy();
 
   await FlutterFlowTheme.initialize();
+  await SessionStore.initialize();
+  FlutterFlowTheme.saveThemeMode(ThemeMode.dark);
 
   runApp(MyApp());
 }
@@ -25,7 +30,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ThemeMode _themeMode = FlutterFlowTheme.themeMode;
+  ThemeMode _themeMode = ThemeMode.dark;
 
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
@@ -65,7 +70,7 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [Locale('en', '')],
+      supportedLocales: const [Locale('es', '')],
       theme: ThemeData(
         brightness: Brightness.light,
         useMaterial3: false,
